@@ -1,51 +1,44 @@
 import React from 'react'
+import styled from 'styled-components/macro'
 
-export default function CoolInput({placeholderText="&nbsp;"}) {
+//  use google font
+const Parent = styled.div`
+ display:flex;
+ flex-direction:column;
+ align-item:center;
+ font-family:sans-serif;
+ font-size:20px;
+`
+const Label = styled.label`
+  position:relative;
+  font-size:15px;  
+`
+const Input = styled.input`
+padding:0.5rem;
+width:17rem;
+background-color:#faf7f2;
+border:none;
+margin:15px;
+&:focus {
+  border:1px solid red;
+}
+`
+const PlaceHolder =  styled.span`
+  position:absolute;
+  color:#d4d1cd;
+  left:5%;
+  top:23%;  
+`
+const ErrorMessage = styled.span``
+
+export default function CoolInput({placeholderText}) {
     return (        
-        //TODO empty spave what to do ?
-            // <div class="custom-field"> 
-            //     <label aria-label={ placeholderText || '&nbsp;' }>
-            //         {/* we do not specify it on the placeolder type */}
-            //         <input typpe="email"></input>                
-            //     </label>        
-            // </div>
-
-            // <div class="custom-field">
-            //       <input id="email-field" type="email"/>
-            //       <label for="email-field" class="placeholder">
-            //           Enter Email      Enter Email     Enter Email     Enter Email
-
-            //        </label>
-            // </div>
-
-            <>
-            <label className="custom-field">
-  <input type="email" placeholder="&nbsp;"/>
-  <span className="placeholder">Enter Email</span>
-  <span className="error-message" aria-live="polite">The email is invalid</span>
-</label>
-
-<label className="custom-field one">
-  <input type="text" placeholder=" "/>
-  <span className="placeholder">Enter Text</span>
-</label>
-
-<label className="custom-field two">
-  <input type="url" placeholder="&nbsp;"/>
-  <span className="placeholder">Enter URL</span>
-</label>
-
-<label className="custom-field three">
-  <input type="password" placeholder="&nbsp;"/>
-  <span className="placeholder">Enter Password</span>
-  <span className="border"></span>
-</label>
-
-
-
-            </>
+       <Parent> 
+        <Label>
+          <Input></Input>
+          <PlaceHolder>{placeholderText}</PlaceHolder>
+          <ErrorMessage></ErrorMessage>
+        </Label>
+       </Parent>
     )
-
-
-
 }
