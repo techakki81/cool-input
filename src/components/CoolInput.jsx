@@ -19,8 +19,10 @@ width:17rem;
 background-color:#faf7f2;
 border:none;
 margin:15px;
-&:focus {
-  border:1px solid red;
+&:focus + span {
+    top: -10px;
+    font-size: 10px;
+    color: #222;
 }
 `
 const PlaceHolder =  styled.span`
@@ -28,6 +30,8 @@ const PlaceHolder =  styled.span`
   color:#d4d1cd;
   left:5%;
   top:23%;  
+
+  transition: top 0.3s ease-in, color 0.3s ease-in, font-size 0.3s ease-in;
 `
 const ErrorMessage = styled.span``
 
