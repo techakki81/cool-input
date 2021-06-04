@@ -1,5 +1,7 @@
-import React, {useState} from 'react'
+import React, {createRef, useState} from 'react'
 import styled from 'styled-components/macro'
+
+
 
 //  use google font
 const Parent = styled.div`
@@ -22,17 +24,20 @@ border:none;
   border:none;
 }
 
-&:focus + span {
-    top: -15px;
-    font-size: 10px;
-    color: #222;
+// &:valid + span,--> tell this later to show placeholder comes back
+${ ( {isDirty} )=> !isDirty && `&:focus + span{top: -15px;font-size: 10px;color: #222;}`
 }
-`
+ `
 const PlaceHolder =  styled.span`
   position:absolute;
   color:#d4d1cd;
   left:5%;
-  top:23%;  
+  
+ 
+     top:23%;font-size:12px;color:#dedcdc;  
+  
+  
+
   transition: 
     top 0.3s ease-in, 
     color 0.3s ease-in, 
@@ -50,28 +55,32 @@ const ErrorMessage = styled.span`
 `
 
 export default function InputTextOut({placeholderText,errorMsg,onValidation}) {
+ 
+  const [isDirty, setIsDirty] = useState(false)
 
-  const [inptVal, setInptVal] = useState("")
-  
-  const checkboxHandler =()=>{
-    onValidation(inptVal)
+  const handleFocusOut =(e)=>{
+
+    if(e.target.value){
+      setIsDirty(true)
+    }      
+    else
+    {
+     setIsDirty(false)
+    }
+
+     onValidation(e)
   }
-
-  //TODO put valudation
-  console.log(inptVal)
-  //const isError = onValidation
-
-    return (        
+  return (        
        <Parent> 
-        <Label>
+        <Label> 
 
-          <Input 
-            value={inptVal} 
-           >
-           </Input>
-          
-          <PlaceHolder>{placeholderText}</PlaceHolder>
-          <ErrorMessage>{errorMsg} </ErrorMessage>
+           {/* // onBlur is a custom React implementation of onfocusout */}
+            {/* the placeholder comes back ..via css you can use required field and fix it or
+            use js */}
+           {/* <Input  ref={inputRef} onBlur ={onValidation} ></Input>  */}
+          <Input isDirty ={isDirty}  onBlur ={handleFocusOut} ></Input>
+          <PlaceHolder >{placeholderText}</PlaceHolder>
+          {errorMsg && <ErrorMessage>{errorMsg} </ErrorMessage>}
         </Label>
        </Parent>
     )
