@@ -1,15 +1,13 @@
-import React, {createRef, useState} from 'react'
-import styled from 'styled-components/macro'
+import React, {createRef} from 'react'
+import styled  from 'styled-components/macro'
 
-
-
-//  use google font
 const Parent = styled.div`
  display:flex;
  flex-direction:column;
  align-item:center;
  font-family:sans-serif;
  font-size:20px;
+ margin:50px;
 `
 const Label = styled.label`
   position:relative;
@@ -24,19 +22,29 @@ border:none;
   border:none;
 }
 
-// &:valid + span,--> tell this later to show placeholder comes back
-${ ( {isDirty} )=> !isDirty && `&:focus + span{top: -15px;font-size: 10px;color: #222;}`
+&:focus{
+  boder:none;
 }
- `
+
+// &:valid + span,--> tell this later to show placeholder comes back
+&:focus + span,
+&.dirty+span 
+{
+  top: -25px;
+  font-size: 16px;
+  color: #222;
+  
+}`
+ 
 const PlaceHolder =  styled.span`
   position:absolute;
   color:#d4d1cd;
   left:5%;
   
  
-     top:23%;font-size:12px;color:#dedcdc;  
-  
-  
+  top:23%;
+  font-size:12px;
+  color:#dedcdc;   
 
   transition: 
     top 0.3s ease-in, 
@@ -48,28 +56,28 @@ const ErrorMessage = styled.span`
     display: flex;
     align-items: center;
     padding: 0 8px;
-    font-size: 12px;
-    background: #d30909;
-    color: #fff;
+    font-size: 12px;    
+    color:red;
     height: 24px;
 `
 
+const inputRef= createRef()
+
 export default function InputTextOut({placeholderText,errorMsg,onValidation}) {
  
-  const [isDirty, setIsDirty] = useState(false)
-
+ 
   const handleFocusOut =(e)=>{
 
-    if(e.target.value){
-      setIsDirty(true)
-    }      
+    if(e.target.value)    
+     inputRef.current.classList.add("dirty")    
     else
-    {
-     setIsDirty(false)
-    }
+      inputRef.current.classList.remove("dirty")
 
      onValidation(e)
   }
+
+  console.log(Input)
+
   return (        
        <Parent> 
         <Label> 
@@ -78,7 +86,12 @@ export default function InputTextOut({placeholderText,errorMsg,onValidation}) {
             {/* the placeholder comes back ..via css you can use required field and fix it or
             use js */}
            {/* <Input  ref={inputRef} onBlur ={onValidation} ></Input>  */}
-          <Input isDirty ={isDirty}  onBlur ={handleFocusOut} ></Input>
+          <Input 
+                     
+              onBlur ={handleFocusOut} 
+              ref={inputRef}>
+           </Input>
+
           <PlaceHolder >{placeholderText}</PlaceHolder>
           {errorMsg && <ErrorMessage>{errorMsg} </ErrorMessage>}
         </Label>
