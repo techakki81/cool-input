@@ -3,7 +3,7 @@ github
 @techakki
 
 Learnings: CSS transitions and Refs  and passing params to Styled Components
-createGlobalStyle, Inheritence of Styled Componenets
+createGlobalStyle, Inheritence of Styled Componenets Css transitions
 
 Thanks to before semicolo: 
 Twitter and link to his video
